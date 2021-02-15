@@ -1,9 +1,9 @@
 import org.telegram.telegrambots.bots.*;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+
+import java.io.IOException;
 
 public class GetHealthBot extends TelegramLongPollingBot {
 
@@ -12,10 +12,11 @@ public class GetHealthBot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
             message.setChatId(String.valueOf(update.getMessage().getChatId()));
-            message.setText("Привет, " + update.getMessage().getFrom().getFirstName() + "!");
             try {
+                String translatedText = GoogleTranslator.translate(update.getMessage().getText());
+                message.setText("");
                 execute(message); // Call method to send the message
-            } catch (TelegramApiException e) {
+            } catch (TelegramApiException | IOException e) {
                 e.printStackTrace();
             }
         }
