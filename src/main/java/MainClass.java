@@ -9,6 +9,7 @@ public class MainClass {
             botsApi.registerBot(new GetHealthBot());
         } catch (TelegramApiException e) {
             e.printStackTrace();
+
         }
     }
 }
