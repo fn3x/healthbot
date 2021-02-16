@@ -13,8 +13,8 @@ public class GetHealthBot extends TelegramLongPollingBot {
             SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
             message.setChatId(String.valueOf(update.getMessage().getChatId()));
             try {
-                String translatedText = GoogleTranslator.translate(update.getMessage().getText());
-                message.setText("");
+                String enToRusTranslatedText = GoogleTranslator.translate(update.getMessage().getText());
+                message.setText(FoodData.sumCalories(enToRusTranslatedText));
                 execute(message); // Call method to send the message
             } catch (TelegramApiException | IOException e) {
                 e.printStackTrace();
